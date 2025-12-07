@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>모던 로그인</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 폰트 설정 및 배경색 설정 */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* 요구 사항: 그레이 배경 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <!-- 메인 로그인 컨테이너 -->
+    <div class="bg-white p-8 sm:p-10 rounded-xl shadow-2xl w-full max-w-md">
+        <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">로그인</h1>
+        <p class="text-gray-500 mb-8 text-center">계정에 접속하여 서비스를 이용하세요.</p>
+
+        <form id="loginForm" class="space-y-4">
+            
+            <!-- 아이디/비밀번호 입력 폼과 로그인 버튼을 포함하는 섹션 -->
+            <!-- flex items-stretch로 버튼이 입력창 높이만큼 늘어나도록 설정 -->
+            <div class="flex items-stretch gap-3">
+                
+                <!-- 1. ID/PW 입력 필드 (세로 스택) -->
+                <div class="flex flex-col space-y-3 flex-grow">
+                    <input type="text" id="username" placeholder="아이디" 
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition duration-150 text-gray-900"
+                           required>
+
+                    <input type="password" id="password" placeholder="비밀번호" 
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-black focus:border-black transition duration-150 text-gray-900"
+                           required>
+                </div>
+                
+                <!-- 2. 로그인 버튼 (입력폼 두 개의 우측에 위치) -->
+                <button type="submit" id="loginButton"
+                        class="bg-black text-white font-semibold rounded-lg shadow-md hover:bg-gray-800 transition-colors duration-200 active:ring-4 active:ring-black/20 focus:outline-none w-28 text-lg"
+                        style="height: 100%;">
+                    로그인
+                </button>
+            </div>
+
+            <!-- 유효성 검사 메시지 출력 영역 -->
+            <div id="message" class="text-center text-sm font-medium pt-2 h-6"></div>
+
+            <!-- 아이디 찾기 / 비밀번호 찾기 하이퍼링크 -->
+            <div class="flex justify-center space-x-4 text-sm pt-4">
+                <a href="#" class="text-gray-600 hover:text-black transition-colors duration-150">아이디 찾기</a>
+                <span class="text-gray-400">|</span>
+                <a href="#" class="text-gray-600 hover:text-black transition-colors duration-150">비밀번호 찾기</a>
+            </div>
+            
+        </form>
+    </div>
+
+    <script>
+        // DOM 요소 가져오기
+        const loginForm = document.getElementById('loginForm');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const messageDiv = document.getElementById('message');
+        const loginButton = document.getElementById('loginButton');
+
+        // ==== 4. 자바스크립트: 유효성 검사 로직 ====
+        function validateLogin(e) {
+            e.preventDefault(); // 기본 폼 제출 동작 방지
+
+            const id = usernameInput.value;
+            const pw = passwordInput.value;
+
+            // 1. 아이디 유효성 검사: 7자 ~ 15자 이내
+            if (id.length < 7 || id.length > 15) {
+                messageDiv.textContent = '❌ 아이디는 7자에서 15자 사이여야 합니다.';
+                messageDiv.className = 'text-center text-sm font-medium pt-2 text-red-500';
+                return;
+            }
+
+            // 2. 비밀번호 길이 유효성 검사: 5자 ~ 20자 이내
+            if (pw.length < 5 || pw.length > 20) {
+                messageDiv.textContent = '❌ 비밀번호는 5자에서 20자 사이여야 합니다.';
+                messageDiv.className = 'text-center text-sm font-medium pt-2 text-red-500';
+                return;
+            }
+
+            // 3. 비밀번호 특수 문자 포함 유효성 검사 (특수 문자 정규식)
+            // 최소 하나의 특수 문자 포함: !@#$%^&*()_+-=[]{};':"|,.<>/?`~
+            const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/; 
+            
+            if (!specialCharRegex.test(pw)) {
+                messageDiv.textContent = '❌ 비밀번호는 특수 문자를 하나 이상 포함해야 합니다.';
+                messageDiv.className = 'text-center text-sm font-medium pt-2 text-red-500';
+                return;
+            }
+
+            // 모든 유효성 검사 통과 시
+            messageDiv.textContent = '✅ 로그인 성공! (제출 로직은 생략됨)';
+            messageDiv.className = 'text-center text-sm font-medium pt-2 text-green-600';
+            
+            // 실제 로그인 API 호출 등 성공 후 로직 구현
+            // console.log("로그인 시도:", { id, pw });
+        }
+
+        loginForm.addEventListener('submit', validateLogin);
+
+        // ==== 4. 자바스크립트: 마우스 오버 시 색이 짙게 변함 (JS 요구 사항 준수) ====
+        // 참고: 실제 색상 변경 효과는 Tailwind의 hover:bg-gray-800 CSS로 구현되어 있으나, 
+        // JS 요구 사항을 충족시키기 위해 클래스 조작을 추가합니다.
+        
+        loginButton.addEventListener('mouseenter', () => {
+            // 마우스 오버 시 배경색을 더 짙게 변경하는 클래스 추가 (CSS hover:bg-gray-800와 유사한 효과)
+            loginButton.classList.remove('bg-black');
+            loginButton.classList.add('bg-gray-800');
+        });
+
+        loginButton.addEventListener('mouseleave', () => {
+            // 마우스가 벗어날 때 원래 색으로 복구
+            loginButton.classList.remove('bg-gray-800');
+            loginButton.classList.add('bg-black');
+        });
+        
+    </script>
+
+</body>
+</html>
