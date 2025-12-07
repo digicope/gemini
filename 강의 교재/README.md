@@ -1,6 +1,4 @@
 ### 강의 교재
-
-<br>
 <br>
 
 #### Google Gemini 사이트 <br>
