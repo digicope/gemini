@@ -11,7 +11,8 @@
 
 #### 강사: 고병화
 #### E-mail : digicope@aicore.co.kr
-
+<br>
+<br>
 
 #### Google Gemini 사이트 <br>
 https://gemini.google.com/
