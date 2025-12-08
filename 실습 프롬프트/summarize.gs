@@ -1,4 +1,4 @@
-const API_KEY = 'AIzaSyBudhHZ_eFP2FjAiTlHVmNWOMK4Gf7baIQ'; 
+const API_KEY = 'AIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'; 
 const MODEL_NAME = 'gemini-2.5-flash';
 
 /**
@@ -93,4 +93,5 @@ ${textData}
     Logger.log("스크립트 실행 오류: " + e.toString());
     Browser.msgBox('스크립트 오류', '스크립트 실행 중 문제가 발생했습니다: ' + e.toString(), Browser.Buttons.OK);
   }
+
 }
