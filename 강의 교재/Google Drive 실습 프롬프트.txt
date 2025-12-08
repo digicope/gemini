@@ -1,0 +1,5 @@
+[Google Drive 실습 프롬프트]
+
+GCP 관련 가장 최근에 만든 프레젠테이션 파일 찾아줘.
+
+find the most recent presentation about GCP
