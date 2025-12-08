@@ -1,5 +1,5 @@
 // ⭐ [필수] 유효한 키로 교체해야 합니다.
-const GEMINI_API_KEY = 'AIzaSyBudhHZ_eFP2FjAiTlHVmNWOMK4Gf7baIQ'
+const GEMINI_API_KEY = 'AIXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
 // const MODEL_NAME = 'gemini-2.5-flash';
 
 /**
@@ -141,4 +141,5 @@ function outputReportToSheet(reportText) {
   
   newSheet.getRange("A1").setFontWeight("bold");
   newSheet.setColumnWidth(1, 800); 
+
 }
